@@ -1,0 +1,60 @@
+<h2>Manage your articles</h2>   
+    
+<p><%= link_to 'Start writing a new article', new_article_path, :class => "awesome custom red" %></p>
+
+<section id="myarticles">
+        
+    <% if !@myarticles.empty? %>
+    
+        <% @myarticles.each do |article| %>
+    
+            <article class="myarticle">
+        
+                <div class="title"><%= article.title %></div>
+                <div class="created">
+                    Created / Last updated: <%= article.created_at.strftime("%B %d, %Y") %> / <%= article.updated_at.strftime("%B %d, %Y") %>
+                </div>
+                        
+                <!-- the states:  0...draft, 1...submitted, 2...rejected, 3...full article, 4...featured article -->                                
+                        
+                <% if article.state == 0 %>     
+                  <div class="state">Current status: Draft (visible via direct link)</div>
+                <% end%>
+            
+                <% if article.state == 1 %>     
+                  <div class="state">Current status: Submitted (<%= article.submitted.strftime("%B %d, %Y") %>)</div>
+                <% end%>
+            
+                <% if article.state == 2 %>     
+                  <div class="state">Current status: Rejected (<%= article.submitted.strftime("%B %d, %Y") %>)</div>
+                  <div class="reject">Please read the comment, review your article and submit it again!</div>
+                  <div class="rejectmsg"><%= article.message %></div>
+                <% end%>
+            
+                <% if article.state == 3 %>
+                  <div class="state">Current status: Accepted and published as a standard article (<%= article.accepted.strftime("%B %d, %Y") %>)</div>
+                <% end %>
+                
+                <% if article.state == 4 %>
+                  <div class="state">Current status: Accepted and published as a <b>featured article</b> (<%= article.accepted.strftime("%B %d, %Y") %>)</div>
+                <% end %>
+    
+                <div class="actions">
+                    <span class="show"><%= link_to 'View', article, :class => "awesome custom red" %></span>
+                    <span class="edit"><%= link_to 'Edit', edit_article_path(article), :class => "awesome custom red" %></span>
+                    <% if (article.state == 0) or (article.state == 2) %>
+                         <span><%= link_to "Submit now", submit_article_path(article), :method => :put, :class => "awesome custom red" %>
+                    <% end %>
+                    <% if article.state < 3 %>
+                        <span class="delete"><%= link_to 'Delete', article, :confirm => 'Are you sure?', :method => :delete, :class => "awesome custom black" %></span>
+                    <% end %>
+                </div>
+                
+            </article>  
+        <% end %>
+
+    <% else %>
+        <p>You have not written any articles yet. Start to contribute: <%= link_to 'New Article', new_article_path, :class => "awesome custom red" %> %></p>
+    <% end %>
+
+</section>

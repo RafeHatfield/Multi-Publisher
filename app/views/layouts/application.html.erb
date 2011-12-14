@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Publisher</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <header id="page_header"> 
+    <nav id="nav_user">
+      <ul>
+        <% if user_signed_in? %> 
+          <li><span id="currentuser"><%= current_user.email %></span></li>
+          &nbsp;
+          <li><%= link_to "My Profile", edit_user_registration_path %></li>
+          <li><%= link_to "My Articles", myarticles_articles_path %></li>
+          <li><%= link_to "Sign out", destroy_user_session_path %></li>
+        <% else %> 
+          <li><%= link_to "Sign up", new_user_registration_path %></li> 
+          <li><%= link_to "Sign in", new_user_session_path %></li>
+        <% end %>
+      </ul>
+    </nav>    
+
+    <div id="page_title">
+      <h1>Test Publisher<span></span></h1>
+      <h2>Something something <span></span></h2>
+    </div>
+  </header>
+
+  <header id="nav_header">
+    <nav id="nav_main">
+      <ul> 
+        <li>
+          <%= link_to "Featured Articles", root_path %>
+          <%= link_to "All Articles", all_articles_path %>
+          <%= link_to "About", about_articles_path %>
+        </li>               
+      </ul> 
+    </nav>
+  </header>
+
+
+  <section id="maincontainer">
+      <section id="content">  
+          <section id="flash">
+              <% flash.each do |key, value| %>
+                  <div class="flash <%= key %>"><%= value %></div>
+              <% end %>
+          </section>
+
+          <%= yield %>
+      </section>  
+
+<!--   <section id="sidebar">
+      <section id="support" class="box">
+          <h3>Support CommunityGuides</h3>
+          <h4>There are several ways to support:</h4>
+          <ul>
+              <li>Write an article</li>
+              <li>Comment on articles</li>
+              <li>Rate articles</li>
+              <li>Promote CommunityGuides</li>
+          </ul>
+      </section>
+  
+      <section id="links" class="box">
+          <h3>Links (Editor's Picks)</h3>
+          <div><%= link_to "The official RailsGuides", "http://guides.rubyonrails.org" %></div>
+          <div><%= link_to "The official Rails API", "http://api.rubyonrails.org/" %></div>
+      </section>
+  </section> -->
+
+  <section id="sidebar">
+      <section id="support" class="box">
+          <h3>mmmm, this is a tasty burger!</h3>
+          <h4></h4>
+          <ul>
+              <li>Look, just because I don't be givin' no man a foot massage don't make it right for Marsellus to throw Antwone into a glass motherfuckin' house, fuckin' up the way the nigger talks. Motherfucker do that shit to me, he better paralyze my ass, 'cause I'll kill the motherfucker, know what I'm sayin'?</li>
+          </ul>
+      </section>
+  </section>
+
+  </section>
+
+  <footer id="page_footer"> 
+      <hr />
+      <!-- <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">
+          <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" />
+      </a>
+      <br />
+      All content is licensed under 
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">
+          Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
+      </a>. -->
+  </footer>
+</body>
+</html>

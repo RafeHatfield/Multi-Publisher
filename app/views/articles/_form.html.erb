@@ -1,0 +1,54 @@
+<%= form_for(@article) do |f| %>
+  <% if @article.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@article.errors.count, "error") %> prohibited this article from being saved:</h2>
+
+      <ul>
+      <% @article.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% # Title and Teaser can not be changed once an article has been accepted %>
+  <% if @article.state < 3 %>
+    <div class="field">
+        <label for="article_title">Title (Plaintext, 80 characters max)</label><br />
+        <%= f.text_field :title, :size => "100%", :class => "fullwidth"  %>
+    </div>
+    <div class="field">
+        <label for="article_teaser">Teaser (Plaintext, 500 characters max)</label><br />
+        <%= f.text_area :teaser, :size => "100%x5", :class => "fullwidth"  %>
+    </div>      
+  <% else %>
+    <div class="field">
+        <label for="article_title">Title (can not be changed as this article has already been accepted)</label><br />
+        <%= f.text_field :title, :readonly => true,  :size => "100%", :class => "fullwidth"  %>
+    </div>
+    <div class="field">
+        <label for="article_teaser">Teaser (can not be changed as this article has already been accepted)</label><br />
+        <%= f.text_area :teaser, :readonly => true, :size => "100%x5", :class => "fullwidth"  %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <label for="article_body">Your Article (Textile: RedCloth with Coderay - <%= link_to "What is this?", '#' %>)</label><br />
+    <%= f.text_area :body, :size => "100%x40", :class => "fullwidth"  %>
+  </div>
+  <div class="field">
+    <label for="version">Version of Rails and special Gems used (Plaintext, 120 characters max)</label><br />
+    <%= f.text_field :version, :size => "100%", :class => "fullwidth"  %>
+  </div>
+  <div class="field">
+    <label for="article_body">Changelog of this Article (Plaintext, 2000 characters max)</label><br />
+    <%= f.text_area :changelog, :size => "100%x10", :class => "fullwidth"  %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit :class => "awesome custom red" %>
+    <%= link_to 'View this article', @article, :class => "awesome custom black" %>
+    <%= link_to 'Return to my articles', myarticles_articles_path, :class => "awesome custom black" %>
+  </div>
+
+<% end %>
