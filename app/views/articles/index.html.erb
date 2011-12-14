@@ -11,4 +11,8 @@
             <div class = "teaser"><%= article.teaser %></div>
         </article>  
     <% end %>
+
+    <div class='pagination'>
+        <%= will_paginate @articles %>
+    </div>
 </section>

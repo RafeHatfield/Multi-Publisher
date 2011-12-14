@@ -8,39 +8,59 @@
 </head>
 <body>
   <header id="page_header"> 
+    
     <nav id="nav_user">
       <ul>
         <% if user_signed_in? %> 
           <li><span id="currentuser"><%= current_user.email %></span></li>
-          &nbsp;
-          <li><%= link_to "My Profile", edit_user_registration_path %></li>
-          <li><%= link_to "My Articles", myarticles_articles_path %></li>
+            &nbsp;
+          <%= request.path == edit_user_registration_path ? raw("<li class='selected'>") : raw("<li>") %>
+            <%= link_to "My Profile", edit_user_registration_path %>
+          </li>
+          <%= request.path == myarticles_articles_path ? raw("<li class='selected'>") : raw("<li>") %>
+            <%= link_to "My Articles", myarticles_articles_path %>
+          </li>
           <li><%= link_to "Sign out", destroy_user_session_path %></li>
         <% else %> 
-          <li><%= link_to "Sign up", new_user_registration_path %></li> 
-          <li><%= link_to "Sign in", new_user_session_path %></li>
+          <%= request.path == new_user_registration_path ? raw("<li class='selected'>") : raw("<li>") %>
+            <%= link_to "Sign up", new_user_registration_path %>
+          </li> 
+          <%= request.path == new_user_session_path ? raw("<li class='selected'>") : raw("<li>") %>
+            <%= link_to "Sign in", new_user_session_path %>
+          </li>
         <% end %>
       </ul>
-    </nav>    
+    </nav> 
 
     <div id="page_title">
       <h1>Test Publisher<span></span></h1>
       <h2>Something something <span></span></h2>
     </div>
+    
   </header>
+
 
   <header id="nav_header">
     <nav id="nav_main">
       <ul> 
-        <li>
-          <%= link_to "Featured Articles", root_path %>
-          <%= link_to "All Articles", all_articles_path %>
+        <%= request.path == root_path ? raw("<li class='selected'>") : raw("<li>") %>
+          <%= link_to "Featured Articles [" + @num_featured + "]", root_path %>
+        </li>
+        <%= request.path == all_articles_path ? raw("<li class='selected'>") : raw("<li>") %>
+          <%= link_to "All Articles [" + @num_all + "]", all_articles_path %>
+        </li>
+        <%= request.path == about_articles_path ? raw("<li class='selected'>") : raw("<li>") %>
           <%= link_to "About", about_articles_path %>
-        </li>               
+        </li>
+        <li id="listsearch">         
+          <%= form_tag all_articles_path, :method => 'get' do %> 
+            <%= text_field_tag :search, params[:search] %> 
+            <%= submit_tag "Search", :name => nil, :class => "awesome search red" %> 
+          <% end %>
+        </li>                   
       </ul> 
     </nav>
   </header>
-
 
   <section id="maincontainer">
       <section id="content">  

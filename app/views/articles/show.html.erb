@@ -17,7 +17,7 @@
 </section>
 
 <section id="articlebody" class="textile">
-  <%= @article.body %>
+  <%= sanitize textilize(coderay_dressed(@article.body)) %>
 </section>
 
 

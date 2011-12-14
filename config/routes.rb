@@ -1,6 +1,18 @@
 Publisher::Application.routes.draw do
   devise_for :users
 
+  resources :admin, :only => [:index] do
+	  member do
+	    get 'editreject'
+	    put 'reject'
+	    put 'accept'
+	  end
+	
+    collection do
+      get 'articles'
+    end
+  end
+
   resources :articles do
     collection do
       get 'about'
