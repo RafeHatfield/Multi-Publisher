@@ -1,5 +1,12 @@
 <section id="articleheader">
-  <h2><%= @article.title %></h2>
+  <h2>
+      <%= @article.title %>
+      <ul class="stars floatstars">
+          <li class="yellowstars" style="width: <%= @article.avg_rating * 25 %>px !important;"></li>
+          <li class="text"><%= @article.avg_rating %> average from <%= pluralize(@article.count_ratings, "vote") %></li>
+      </ul>
+  </h2>
+  
   <div class="byline">written by <%= link_to @article.user.fullname, "" %></div>
 
   <div class="avatar">
@@ -16,22 +23,42 @@
 
 <% # comments are available for published articles only %>
 <% if @article.state > 2 %>
-    <section id="comments"> 
-      <% @comments.each do |comment| %>
-        <article class="comment">      
-          <div class="avatar"><%= image_tag gravatar(comment.user.email, 48) %></div>
-          <div class="commentbody">
-            <div class="commenthead">               
-              <%= comment.user.fullname %> - <%=time_ago_in_words(comment.created_at)%> ago 
-              <% # display delete link only for comments written by this particular user %>
-              <% if user_signed_in? and comment.user_id == current_user.id %>
-                <span><%= link_to 'delete', article_comment_path(@article, comment), :confirm => 'Are you sure?', :method => :delete, :class => "" %></span>
-              <% end %> 
-            </div>
-            <div><%= comment.body %></div>
-          </div>  
-        </article>
-      <% end %>
+
+  <section id="rating">   
+      <% if user_signed_in? %>
+          <%= form_for [@article, @rating_currentuser] do |f| %>
+              <div id="ratingbox">
+                  <ul id="ratingbuttons">
+                      <li><%= f.radio_button :stars, "5" %><span>Excellent</span></li>
+                      <li><%= f.radio_button :stars, "4" %><span>Very Good</span></li>
+                      <li><%= f.radio_button :stars, "3" %><span>Good</span></li>
+                      <li><%= f.radio_button :stars, "2" %><span>Average</span></li>
+                      <li><%= f.radio_button :stars, "1" %><span>Poor</span></li>                     
+                  </ul>article
+                  <div class="center"><%= f.submit "Rate this article", :class => "awesome custom red" %></div>
+              </div>
+          <% end %>
+      <% else %>
+          <div id="ratingbox"><%= link_to "Sign in", new_user_session_path %> to rate this article</div>
+      <% end %>   
+  </section>
+
+  <section id="comments"> 
+    <% @comments.each do |comment| %>
+      <article class="comment">      
+        <div class="avatar"><%= image_tag gravatar(comment.user.email, 48) %></div>
+        <div class="commentbody">
+          <div class="commenthead">               
+            <%= comment.user.fullname %> - <%=time_ago_in_words(comment.created_at)%> ago 
+            <% # display delete link only for comments written by this particular user %>
+            <% if user_signed_in? and comment.user_id == current_user.id %>
+              <span><%= link_to 'delete', article_comment_path(@article, comment), :confirm => 'Are you sure?', :method => :delete, :class => "" %></span>
+            <% end %> 
+          </div>
+          <div><%= comment.body %></div>
+        </div>  
+      </article>
+    <% end %>
   
     <% # add a new comment %>   
     <article class="comment newcomment">            

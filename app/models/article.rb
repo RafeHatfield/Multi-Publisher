@@ -16,4 +16,13 @@ class Article < ActiveRecord::Base
   validates :message, :length => { :maximum => 5000 }
   validates :state, :presence => true, :numericality => true, :inclusion => { :in => 0..4 }
 
+	def count_ratings
+		self.ratings.all.count
+	end
+	
+	def avg_rating
+		@avg = self.ratings.average(:stars)
+		@avg ? @avg : 0
+	end
+
 end
