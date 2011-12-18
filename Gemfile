@@ -21,6 +21,7 @@ gem 'devise'
 gem 'will_paginate'
 gem 'RedCloth'
 gem 'coderay'
+gem 'validate_url'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

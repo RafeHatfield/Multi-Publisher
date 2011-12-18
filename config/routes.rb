@@ -1,5 +1,5 @@
 Publisher::Application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "users/registrations" }
 
   resources :admin, :only => [:index] do
 	  member do
