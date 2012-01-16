@@ -4,8 +4,8 @@
 # development environment upon cd'ing into the directory.
 # For more info, see: http://beginrescueend.com/
 
-ruby_gemset_name="ruby-1.9.2-p180@publisher"
-ruby_name="ruby-1.9.2-p180"
+ruby_gemset_name="ruby-1.9.2@publisher"
+ruby_name="ruby-1.9.2"
 
 echo "RVM: Using ${ruby_gemset_name} for this project."
 # Ensure we have the right ruby installed to use this project.

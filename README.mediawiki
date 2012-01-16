@@ -1,0 +1,5 @@
+= Publisher =
+
+== Multi publishing blog ==
+
+Simple muli-user blog application, created for practice using Devise with customisation.

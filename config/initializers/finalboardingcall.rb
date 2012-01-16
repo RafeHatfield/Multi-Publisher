@@ -1,0 +1,1 @@
+Publisher::Application.config.middleware.insert_before(Rack::Lock, Rack::FinalBoardingCall)
